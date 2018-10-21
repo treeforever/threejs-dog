@@ -1,3 +1,6 @@
+import * as THREE from 'three';
+import OrbitControls from './OrbitControls';
+
 //THREEJS RELATED VARIABLES
 
 var scene,
@@ -29,7 +32,6 @@ var HEIGHT,
     x: 0,
     y: 0,
   };
-dist = 0;
 
 var onMouseDownPosition;
 
@@ -65,7 +67,7 @@ function init() {
   container.appendChild(renderer.domElement);
   windowHalfX = WIDTH / 2;
   windowHalfY = HEIGHT / 2;
-  controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls = new OrbitControls(camera, renderer.domElement);
 
   controls.update();
 }
@@ -119,7 +121,7 @@ function createLion() {
   scene.add(lion.threegroup);
 }
 
-Lion = function() {
+function Lion() {
   this.windTime = 0;
   this.bodyInitPositions = [];
   this.maneParts = [];
@@ -158,7 +160,7 @@ Lion = function() {
     shading: THREE.FlatShading,
   });
 
-  var head1 = new THREE.BoxGeometry(300, 200, 100);
+  var head1 = new THREE.BoxGeometry(200, 350, 100);
   var ear1 = new THREE.BoxGeometry(100, 50, 30);
   var ear2 = new THREE.BoxGeometry(100, 50, 30);
   var eye1 = new THREE.BoxGeometry(60, 35, 30);
@@ -198,7 +200,7 @@ Lion = function() {
       object.receiveShadow = true;
     }
   });
-};
+}
 
 function loop() {
   render();
@@ -210,9 +212,18 @@ function render() {
   renderer.render(scene, camera);
 }
 
+function component() {
+  const el = document.createElement('div');
+  el.setAttribute('id', 'world');
+  return el;
+}
+
+document.body.appendChild(component());
+
 init();
 createLights();
 addGrid();
 // createFloor();
 createLion();
 loop();
+console.log('z');
