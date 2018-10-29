@@ -13,6 +13,7 @@ import {
   MeshLambertMaterial,
   BoxGeometry,
   FlatShading,
+  MeshBasicMaterial,
 } from 'three';
 
 import OrbitControls from './OrbitControls';
@@ -116,13 +117,14 @@ function createLights() {
 
 function createFloor() {
   floor = new Mesh(
-    new PlaneBufferGeometry(1000, 500),
+    new PlaneBufferGeometry(2000, 2000),
     new MeshBasicMaterial({
-      color: 0xebe5e7,
+      color: 0x588b8b,
     }),
   );
   floor.rotation.x = -Math.PI / 2;
-  floor.position.y = -100;
+  floor.position.y = -350;
+  floor.position.z = -500;
   floor.receiveShadow = true;
   scene.add(floor);
 }
@@ -146,12 +148,12 @@ function Lion() {
     shading: FlatShading,
   });
 
-  this.pinkMat = new MeshLambertMaterial({
+  this.orangeMat = new MeshLambertMaterial({
     color: 0xe55d2b,
     shading: FlatShading,
   });
 
-  this.lightPinkMat = new MeshLambertMaterial({
+  this.lightorangeMat = new MeshLambertMaterial({
     color: 0xffd177,
     shading: FlatShading,
   });
@@ -176,6 +178,11 @@ function Lion() {
     shading: FlatShading,
   });
 
+  this.pinkMat = new MeshLambertMaterial({
+    color: 0xfa2e05,
+    shading: FlatShading,
+  });
+
   // head
   var head1 = new BoxGeometry(80, 100, 300);
   var head2 = new BoxGeometry(80, 80, 150);
@@ -188,20 +195,15 @@ function Lion() {
   // ears & nose
   var ear1 = new BoxGeometry(15, 160, 100);
   var ear2 = new BoxGeometry(15, 160, 100);
-  var nose = new BoxGeometry(35, 35, 30);
 
-  this.ear1 = new Mesh(ear1, this.pinkMat);
-  this.ear2 = new Mesh(ear2, this.pinkMat);
-  this.nose = new Mesh(nose, this.pinkMat);
+  this.ear1 = new Mesh(ear1, this.orangeMat);
+  this.ear2 = new Mesh(ear2, this.orangeMat);
 
   this.ear1.position.set(90, 85, -135);
   this.ear2.position.set(-90, 85, -135);
-  this.nose.position.set(0, 50, 165);
 
   this.threegroup.add(this.ear1);
   this.threegroup.add(this.ear2);
-
-  this.threegroup.add(this.nose);
 
   // eyes
   var eye1 = new BoxGeometry(10, 30, 30);
@@ -229,6 +231,18 @@ function Lion() {
   this.threegroup.add(this.eyeBall1);
   this.threegroup.add(this.eyeBall2);
 
+  // nose
+  var nose = new BoxGeometry(35, 35, 30);
+  this.nose = new Mesh(nose, this.orangeMat);
+  this.nose.position.set(0, 40, 140);
+  this.threegroup.add(this.nose);
+
+  // tongue
+  var tongue = new BoxGeometry(60, 20, 60);
+  this.tongue = new Mesh(tongue, this.pinkMat);
+  this.tongue.position.set(0, -20, 160);
+  this.threegroup.add(this.tongue);
+
   // body
   var upperBody = new BoxGeometry(160, 300, 100);
   this.upperBody = new Mesh(upperBody, this.yellowMat);
@@ -248,54 +262,54 @@ function Lion() {
   // legs
   // right
   var rightBackThigh = new BoxGeometry(50, 150, 100);
-  this.rightBackThigh = new Mesh(rightBackThigh, this.pinkMat);
+  this.rightBackThigh = new Mesh(rightBackThigh, this.orangeMat);
   this.rightBackThigh.position.set(165, -275, -550);
   this.threegroup.add(this.rightBackThigh);
 
   var rightBackLeg = new BoxGeometry(50, 50, 200);
-  this.rightBackLeg = new Mesh(rightBackLeg, this.pinkMat);
+  this.rightBackLeg = new Mesh(rightBackLeg, this.orangeMat);
   this.rightBackLeg.position.set(165, -325, -400);
   this.threegroup.add(this.rightBackLeg);
 
   var rightFrontThigh = new BoxGeometry(50, 150, 50);
-  this.rightFrontThigh = new Mesh(rightFrontThigh, this.pinkMat);
+  this.rightFrontThigh = new Mesh(rightFrontThigh, this.orangeMat);
   this.rightFrontThigh.position.set(105, -275, -100);
   this.threegroup.add(this.rightFrontThigh);
 
   var rightFrontLeg = new BoxGeometry(50, 50, 200);
-  this.rightFrontLeg = new Mesh(rightFrontLeg, this.pinkMat);
+  this.rightFrontLeg = new Mesh(rightFrontLeg, this.orangeMat);
   this.rightFrontLeg.position.set(105, -325, 0);
   this.threegroup.add(this.rightFrontLeg);
 
   // left
   var leftBackThigh = new BoxGeometry(50, 150, 100);
-  this.leftBackThigh = new Mesh(leftBackThigh, this.pinkMat);
+  this.leftBackThigh = new Mesh(leftBackThigh, this.orangeMat);
   this.leftBackThigh.position.set(-165, -275, -550);
   this.threegroup.add(this.leftBackThigh);
 
   var leftBackLeg = new BoxGeometry(50, 50, 200);
-  this.leftBackLeg = new Mesh(leftBackLeg, this.pinkMat);
+  this.leftBackLeg = new Mesh(leftBackLeg, this.orangeMat);
   this.leftBackLeg.position.set(-165, -325, -400);
   this.threegroup.add(this.leftBackLeg);
 
   var leftFrontThigh = new BoxGeometry(50, 150, 50);
-  this.leftFrontThigh = new Mesh(leftFrontThigh, this.pinkMat);
+  this.leftFrontThigh = new Mesh(leftFrontThigh, this.orangeMat);
   this.leftFrontThigh.position.set(-105, -275, -100);
   this.threegroup.add(this.leftFrontThigh);
 
   var leftFrontLeg = new BoxGeometry(50, 50, 200);
-  this.leftFrontLeg = new Mesh(leftFrontLeg, this.pinkMat);
+  this.leftFrontLeg = new Mesh(leftFrontLeg, this.orangeMat);
   this.leftFrontLeg.position.set(-105, -325, 0);
   this.threegroup.add(this.leftFrontLeg);
 
   // tail
   var tail1 = new BoxGeometry(20, 20, 100);
-  this.tail1 = new Mesh(tail1, this.pinkMat);
+  this.tail1 = new Mesh(tail1, this.orangeMat);
   this.tail1.position.set(0, -250, -700);
   this.threegroup.add(this.tail1);
 
   var tail2 = new BoxGeometry(80, 20, 20);
-  this.tail2 = new Mesh(tail2, this.pinkMat);
+  this.tail2 = new Mesh(tail2, this.orangeMat);
   this.tail2.position.set(-50, -250, -740);
   this.threegroup.add(this.tail2);
 
@@ -329,6 +343,6 @@ document.body.appendChild(component());
 init();
 createLights();
 // addGrid();
-// createFloor();
+createFloor();
 createLion();
 loop();
