@@ -214,6 +214,60 @@ function Lion() {
   this.bottom.position.set(0, -225, -550);
   this.threegroup.add(this.bottom);
 
+  // legs
+  // right
+  var rightBackThigh = new THREE.BoxGeometry(50, 150, 100);
+  this.rightBackThigh = new THREE.Mesh(rightBackThigh, this.pinkMat);
+  this.rightBackThigh.position.set(165, -275, -550);
+  this.threegroup.add(this.rightBackThigh);
+
+  var rightBackLeg = new THREE.BoxGeometry(50, 50, 200);
+  this.rightBackLeg = new THREE.Mesh(rightBackLeg, this.pinkMat);
+  this.rightBackLeg.position.set(165, -325, -400);
+  this.threegroup.add(this.rightBackLeg);
+
+  var rightFrontThigh = new THREE.BoxGeometry(50, 150, 50);
+  this.rightFrontThigh = new THREE.Mesh(rightFrontThigh, this.pinkMat);
+  this.rightFrontThigh.position.set(105, -275, -100);
+  this.threegroup.add(this.rightFrontThigh);
+
+  var rightFrontLeg = new THREE.BoxGeometry(50, 50, 200);
+  this.rightFrontLeg = new THREE.Mesh(rightFrontLeg, this.pinkMat);
+  this.rightFrontLeg.position.set(105, -325, 0);
+  this.threegroup.add(this.rightFrontLeg);
+
+  // left
+  var leftBackThigh = new THREE.BoxGeometry(50, 150, 100);
+  this.leftBackThigh = new THREE.Mesh(leftBackThigh, this.pinkMat);
+  this.leftBackThigh.position.set(-165, -275, -550);
+  this.threegroup.add(this.leftBackThigh);
+
+  var leftBackLeg = new THREE.BoxGeometry(50, 50, 200);
+  this.leftBackLeg = new THREE.Mesh(leftBackLeg, this.pinkMat);
+  this.leftBackLeg.position.set(-165, -325, -400);
+  this.threegroup.add(this.leftBackLeg);
+
+  var leftFrontThigh = new THREE.BoxGeometry(50, 150, 50);
+  this.leftFrontThigh = new THREE.Mesh(leftFrontThigh, this.pinkMat);
+  this.leftFrontThigh.position.set(-105, -275, -100);
+  this.threegroup.add(this.leftFrontThigh);
+
+  var leftFrontLeg = new THREE.BoxGeometry(50, 50, 200);
+  this.leftFrontLeg = new THREE.Mesh(leftFrontLeg, this.pinkMat);
+  this.leftFrontLeg.position.set(-105, -325, 0);
+  this.threegroup.add(this.leftFrontLeg);
+
+  // tail
+  var tail1 = new THREE.BoxGeometry(20, 20, 100);
+  this.tail1 = new THREE.Mesh(tail1, this.pinkMat);
+  this.tail1.position.set(0, -250, -700);
+  this.threegroup.add(this.tail1);
+
+  var tail2 = new THREE.BoxGeometry(80, 20, 20);
+  this.tail2 = new THREE.Mesh(tail2, this.pinkMat);
+  this.tail2.position.set(-50, -250, -740);
+  this.threegroup.add(this.tail2);
+
   // don't care now
   this.threegroup.traverse(function(object) {
     if (object instanceof THREE.Mesh) {
