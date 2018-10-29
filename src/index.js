@@ -119,7 +119,7 @@ function createFloor() {
   floor = new Mesh(
     new PlaneBufferGeometry(2000, 2000),
     new MeshBasicMaterial({
-      color: 0x588b8b,
+      color: 0xf9d3c5,
     }),
   );
   floor.rotation.x = -Math.PI / 2;
@@ -140,7 +140,7 @@ function Lion() {
   this.maneParts = [];
   this.threegroup = new Group();
   this.yellowMat = new MeshLambertMaterial({
-    color: 0xffb10a,
+    color: 0xffd177,
     shading: FlatShading,
   });
   this.redMat = new MeshLambertMaterial({
@@ -149,7 +149,7 @@ function Lion() {
   });
 
   this.orangeMat = new MeshLambertMaterial({
-    color: 0xe55d2b,
+    color: 0xf78800,
     shading: FlatShading,
   });
 
@@ -179,7 +179,7 @@ function Lion() {
   });
 
   this.pinkMat = new MeshLambertMaterial({
-    color: 0xfa2e05,
+    color: 0xf77d65,
     shading: FlatShading,
   });
 
@@ -206,8 +206,8 @@ function Lion() {
   this.threegroup.add(this.ear2);
 
   // eyes
-  var eye1 = new BoxGeometry(10, 30, 30);
-  var eye2 = new BoxGeometry(10, 30, 30);
+  var eye1 = new BoxGeometry(10, 40, 40);
+  var eye2 = new BoxGeometry(10, 40, 40);
 
   this.eye1 = new Mesh(eye1, this.whiteMat);
   this.eye2 = new Mesh(eye2, this.whiteMat);
@@ -219,14 +219,14 @@ function Lion() {
   this.threegroup.add(this.eye2);
 
   // eyeballs
-  var eyeBall1 = new BoxGeometry(5, 10, 10);
-  var eyeBall2 = new BoxGeometry(5, 10, 10);
+  var eyeBall1 = new BoxGeometry(5, 15, 15);
+  var eyeBall2 = new BoxGeometry(5, 15, 15);
 
   this.eyeBall1 = new Mesh(eyeBall1, this.blackMat);
   this.eyeBall2 = new Mesh(eyeBall2, this.blackMat);
 
-  this.eyeBall1.position.set(50, 90, -40);
-  this.eyeBall2.position.set(-50, 90, -40);
+  this.eyeBall1.position.set(50, 95, -40);
+  this.eyeBall2.position.set(-50, 95, -40);
 
   this.threegroup.add(this.eyeBall1);
   this.threegroup.add(this.eyeBall2);
@@ -234,11 +234,11 @@ function Lion() {
   // nose
   var nose = new BoxGeometry(35, 35, 30);
   this.nose = new Mesh(nose, this.orangeMat);
-  this.nose.position.set(0, 40, 140);
+  this.nose.position.set(0, 45, 145);
   this.threegroup.add(this.nose);
 
   // tongue
-  var tongue = new BoxGeometry(60, 20, 60);
+  var tongue = new BoxGeometry(40, 20, 80);
   this.tongue = new Mesh(tongue, this.pinkMat);
   this.tongue.position.set(0, -20, 160);
   this.threegroup.add(this.tongue);
