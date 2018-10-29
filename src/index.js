@@ -183,6 +183,11 @@ function Lion() {
     shading: FlatShading,
   });
 
+  this.pawMat = new MeshLambertMaterial({
+    color: 0x704515,
+    shading: FlatShading,
+  });
+
   // head
   var head1 = new BoxGeometry(80, 100, 300);
   var head2 = new BoxGeometry(80, 80, 150);
@@ -243,6 +248,12 @@ function Lion() {
   this.tongue.position.set(0, -20, 160);
   this.threegroup.add(this.tongue);
 
+  // freckles
+  // var freckle1 = new BoxGeometry(2, 7, 7);
+  // this.freckle1 = new Mesh(freckle1, this.pawMat);
+  // this.freckle1.position.set(40, 25, 120);
+  // this.threegroup.add(this.freckle1);
+
   // body
   var upperBody = new BoxGeometry(160, 300, 100);
   this.upperBody = new Mesh(upperBody, this.yellowMat);
@@ -301,6 +312,55 @@ function Lion() {
   this.leftFrontLeg = new Mesh(leftFrontLeg, this.orangeMat);
   this.leftFrontLeg.position.set(-105, -325, 0);
   this.threegroup.add(this.leftFrontLeg);
+
+  // paws
+  // left - front - one
+  var leftFrontPaw = new BoxGeometry(7, 51, 30);
+  this.leftFrontPaw = new Mesh(leftFrontPaw, this.pawMat);
+  this.leftFrontPaw.position.set(-115, -324, 87);
+  this.threegroup.add(this.leftFrontPaw);
+
+  // left - front - two
+  var leftFrontPaw = new BoxGeometry(7, 51, 30);
+  this.leftFrontPaw = new Mesh(leftFrontPaw, this.pawMat);
+  this.leftFrontPaw.position.set(-95, -324, 87);
+  this.threegroup.add(this.leftFrontPaw);
+
+  // left - back - one
+  var leftFrontPaw = new BoxGeometry(7, 51, 30);
+  this.leftFrontPaw = new Mesh(leftFrontPaw, this.pawMat);
+  this.leftFrontPaw.position.set(-155, -324, -314);
+  this.threegroup.add(this.leftFrontPaw);
+
+  // left - back - two
+  var leftFrontPaw = new BoxGeometry(7, 51, 30);
+  this.leftFrontPaw = new Mesh(leftFrontPaw, this.pawMat);
+  this.leftFrontPaw.position.set(-175, -324, -314);
+  this.threegroup.add(this.leftFrontPaw);
+
+  // right - front - one
+  var rightFrontPaw = new BoxGeometry(7, 51, 30);
+  this.rightFrontPaw = new Mesh(rightFrontPaw, this.pawMat);
+  this.rightFrontPaw.position.set(115, -324, 87);
+  this.threegroup.add(this.rightFrontPaw);
+
+  // right - front - two
+  var rightFrontPaw = new BoxGeometry(7, 51, 30);
+  this.rightFrontPaw = new Mesh(rightFrontPaw, this.pawMat);
+  this.rightFrontPaw.position.set(95, -324, 87);
+  this.threegroup.add(this.rightFrontPaw);
+
+  // right - back - one
+  var rightFrontPaw = new BoxGeometry(7, 51, 30);
+  this.rightFrontPaw = new Mesh(rightFrontPaw, this.pawMat);
+  this.rightFrontPaw.position.set(155, -324, -314);
+  this.threegroup.add(this.rightFrontPaw);
+
+  // right - back - two
+  var rightFrontPaw = new BoxGeometry(7, 51, 30);
+  this.rightFrontPaw = new Mesh(rightFrontPaw, this.pawMat);
+  this.rightFrontPaw.position.set(175, -324, -314);
+  this.threegroup.add(this.rightFrontPaw);
 
   // tail
   var tail1 = new BoxGeometry(20, 20, 100);
