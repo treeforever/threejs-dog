@@ -64,9 +64,9 @@ function init() {
   farPlane = 2000;
   camera = new PerspectiveCamera(fieldOfView, aspectRatio, nearPlane, farPlane);
 
-  camera.position.x = 0;
+  camera.position.x = 700;
   camera.position.z = 800;
-  camera.position.y = 0;
+  camera.position.y = 400;
   camera.lookAt(new Vector3(0, 0, 0));
 
   renderer = new WebGLRenderer({
@@ -74,7 +74,7 @@ function init() {
     antialias: true,
   });
   renderer.setSize(WIDTH, HEIGHT);
-  renderer.shadowMapEnabled = true;
+  renderer.shadowMap.enabled = true;
   container = document.getElementById('world');
   container.appendChild(renderer.domElement);
   windowHalfX = WIDTH / 2;
@@ -103,11 +103,11 @@ function createLights() {
   shadowLight = new DirectionalLight(0xffffff, 0.8);
   shadowLight.position.set(200, 200, 200);
   shadowLight.castShadow = true;
-  shadowLight.shadowDarkness = 0.2;
+  // shadowLight.shadowDarkness = 0.2; // shadowDarkness has been removed
 
   backLight = new DirectionalLight(0xffffff, 0.4);
   backLight.position.set(-100, 200, 50);
-  backLight.shadowDarkness = 0.1;
+  // backLight.shadowDarkness = 0.1; // shadowDarkness has been removed
   backLight.castShadow = true;
 
   scene.add(backLight);
@@ -141,56 +141,56 @@ function Lion() {
   this.threegroup = new Group();
   this.yellowMat = new MeshLambertMaterial({
     color: 0xffd177,
-    shading: FlatShading,
+    // shading: FlatShading,
   });
   this.redMat = new MeshLambertMaterial({
     color: 0xad3525,
-    shading: FlatShading,
+    // shading: FlatShading,
   });
 
   this.orangeMat = new MeshLambertMaterial({
     color: 0xf78800,
-    shading: FlatShading,
+    // shading: FlatShading,
   });
 
   this.lightorangeMat = new MeshLambertMaterial({
     color: 0xffd177,
-    shading: FlatShading,
+    // shading: FlatShading,
   });
 
   this.whiteMat = new MeshLambertMaterial({
     color: 0xffffff,
-    shading: FlatShading,
+    // shading: FlatShading,
   });
 
   this.purpleMat = new MeshLambertMaterial({
     color: 0x451954,
-    shading: FlatShading,
+    // shading: FlatShading,
   });
 
   this.greyMat = new MeshLambertMaterial({
     color: 0x653f4c,
-    shading: FlatShading,
+    // shading: FlatShading,
   });
 
   this.blackMat = new MeshLambertMaterial({
     color: 0x302925,
-    shading: FlatShading,
+    // shading: FlatShading,
   });
 
   this.pinkMat = new MeshLambertMaterial({
     color: 0xf77d65,
-    shading: FlatShading,
+    // shading: FlatShading,
   });
 
   this.pawMat = new MeshLambertMaterial({
     color: 0x704515,
-    shading: FlatShading,
+    // shading: FlatShading,
   });
 
   // head
-  var head1 = new BoxGeometry(80, 100, 300);
-  var head2 = new BoxGeometry(80, 80, 150);
+  var head1 = new BoxGeometry(160, 100, 300);
+  var head2 = new BoxGeometry(160, 80, 150);
   this.head1 = new Mesh(head1, this.yellowMat);
   this.head2 = new Mesh(head2, this.yellowMat);
   this.head2.position.set(0, 90, -75);
@@ -204,34 +204,37 @@ function Lion() {
   this.ear1 = new Mesh(ear1, this.orangeMat);
   this.ear2 = new Mesh(ear2, this.orangeMat);
 
-  this.ear1.position.set(90, 85, -135);
-  this.ear2.position.set(-90, 85, -135);
+  this.ear1.position.set(125, 85, -135);
+  this.ear2.position.set(-125, 85, -135);
+
+  this.ear1.rotation.set(-100, -100, -100);
+  this.ear2.rotation.set(-100, 100, 100);
 
   this.threegroup.add(this.ear1);
   this.threegroup.add(this.ear2);
 
   // eyes
-  var eye1 = new BoxGeometry(10, 40, 40);
-  var eye2 = new BoxGeometry(10, 40, 40);
+  var eye1 = new BoxGeometry(40, 40, 10);
+  var eye2 = new BoxGeometry(40, 40, 10);
 
   this.eye1 = new Mesh(eye1, this.whiteMat);
   this.eye2 = new Mesh(eye2, this.whiteMat);
 
-  this.eye1.position.set(45, 90, -40);
-  this.eye2.position.set(-45, 90, -40);
+  this.eye1.position.set(50, 90, 0);
+  this.eye2.position.set(-50, 90, 0);
 
   this.threegroup.add(this.eye1);
   this.threegroup.add(this.eye2);
 
   // eyeballs
-  var eyeBall1 = new BoxGeometry(5, 15, 15);
-  var eyeBall2 = new BoxGeometry(5, 15, 15);
+  var eyeBall1 = new BoxGeometry(15, 15, 5);
+  var eyeBall2 = new BoxGeometry(15, 15, 5);
 
   this.eyeBall1 = new Mesh(eyeBall1, this.blackMat);
   this.eyeBall2 = new Mesh(eyeBall2, this.blackMat);
 
-  this.eyeBall1.position.set(50, 95, -40);
-  this.eyeBall2.position.set(-50, 95, -40);
+  this.eyeBall1.position.set(50, 90, 11);
+  this.eyeBall2.position.set(-50, 90, 11);
 
   this.threegroup.add(this.eyeBall1);
   this.threegroup.add(this.eyeBall2);
@@ -243,7 +246,7 @@ function Lion() {
   this.threegroup.add(this.nose);
 
   // tongue
-  var tongue = new BoxGeometry(40, 20, 80);
+  var tongue = new BoxGeometry(80, 20, 80);
   this.tongue = new Mesh(tongue, this.pinkMat);
   this.tongue.position.set(0, -20, 160);
   this.threegroup.add(this.tongue);
@@ -397,6 +400,8 @@ function component() {
   el.setAttribute('id', 'world');
   return el;
 }
+
+function moveEars() {}
 
 document.body.appendChild(component());
 
