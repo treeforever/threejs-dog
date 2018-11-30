@@ -13,10 +13,10 @@ import {
   MeshLambertMaterial,
   BoxGeometry,
   FlatShading,
-  MeshBasicMaterial,
-} from 'three';
+  MeshBasicMaterial
+} from "three";
 
-import OrbitControls from './OrbitControls';
+import OrbitControls from "./OrbitControls";
 
 //THREEJS RELATED VARIABLES
 
@@ -35,7 +35,7 @@ var scene,
 
 //SCENE
 var floor,
-  lion,
+  dog,
   fan,
   isBlowing = false;
 
@@ -47,7 +47,7 @@ var HEIGHT,
   windowHalfY,
   mousePos = {
     x: 0,
-    y: 0,
+    y: 0
   };
 
 var onMouseDownPosition;
@@ -71,30 +71,28 @@ function init() {
 
   renderer = new WebGLRenderer({
     alpha: true,
-    antialias: true,
+    antialias: true
   });
   renderer.setSize(WIDTH, HEIGHT);
   renderer.shadowMap.enabled = true;
-  container = document.getElementById('world');
+  container = document.getElementById("world");
   container.appendChild(renderer.domElement);
   windowHalfX = WIDTH / 2;
   windowHalfY = HEIGHT / 2;
   controls = new OrbitControls(camera, renderer.domElement);
 
   controls.update();
+
+  document.addEventListener("mousemove", handleMouseMove, false);
+}
+
+function handleMouseMove(event) {
+  mousePos = { x: event.clientX, y: event.clientY };
 }
 
 function addGrid() {
   var gridHelper = new GridHelper(1000, 50);
   scene.add(gridHelper);
-}
-
-function animate() {
-  requestAnimationFrame(animate);
-
-  controls.update();
-
-  renderer.render(scene, camera);
 }
 
 function createLights() {
@@ -119,8 +117,8 @@ function createFloor() {
   floor = new Mesh(
     new PlaneBufferGeometry(2000, 2000),
     new MeshBasicMaterial({
-      color: 0xf9d3c5,
-    }),
+      color: 0xf9d3c5
+    })
   );
   floor.rotation.x = -Math.PI / 2;
   floor.position.y = -350;
@@ -129,62 +127,62 @@ function createFloor() {
   scene.add(floor);
 }
 
-function createLion() {
-  lion = new Lion();
-  scene.add(lion.threegroup);
+function createDog() {
+  dog = new Dog();
+  scene.add(dog.threegroup);
 }
 
-function Lion() {
+function Dog() {
   this.windTime = 0;
   this.bodyInitPositions = [];
   this.maneParts = [];
   this.threegroup = new Group();
   this.yellowMat = new MeshLambertMaterial({
-    color: 0xffd177,
+    color: 0xffd177
     // shading: FlatShading,
   });
   this.redMat = new MeshLambertMaterial({
-    color: 0xad3525,
+    color: 0xad3525
     // shading: FlatShading,
   });
 
   this.orangeMat = new MeshLambertMaterial({
-    color: 0xf78800,
+    color: 0xf78800
     // shading: FlatShading,
   });
 
   this.lightorangeMat = new MeshLambertMaterial({
-    color: 0xffd177,
+    color: 0xffd177
     // shading: FlatShading,
   });
 
   this.whiteMat = new MeshLambertMaterial({
-    color: 0xffffff,
+    color: 0xffffff
     // shading: FlatShading,
   });
 
   this.purpleMat = new MeshLambertMaterial({
-    color: 0x451954,
+    color: 0x451954
     // shading: FlatShading,
   });
 
   this.greyMat = new MeshLambertMaterial({
-    color: 0x653f4c,
+    color: 0x653f4c
     // shading: FlatShading,
   });
 
   this.blackMat = new MeshLambertMaterial({
-    color: 0x302925,
+    color: 0x302925
     // shading: FlatShading,
   });
 
   this.pinkMat = new MeshLambertMaterial({
-    color: 0xf77d65,
+    color: 0xf77d65
     // shading: FlatShading,
   });
 
   this.pawMat = new MeshLambertMaterial({
-    color: 0x704515,
+    color: 0x704515
     // shading: FlatShading,
   });
 
@@ -385,8 +383,45 @@ function Lion() {
   });
 }
 
+function getEarRotation(start, end, xTarget) {
+  var ratio = xTarget / windowHalfX;
+  var currentPo = { x: 0, y: 0, z: 0 };
+  currentPo.x = start.x + ratio * (end.x - start.x);
+  currentPo.y = start.y + ratio * (end.y - start.y);
+  currentPo.z = start.z + ratio * (end.z - start.z);
+  return currentPo;
+}
+
+// animation
+Dog.prototype.move = function(xTarget, yTarget) {
+  var start = {
+    x: -100,
+    y: -100,
+    z: -100
+  };
+
+  var end = {
+    x: 50,
+    y: -200,
+    z: -200
+  };
+
+  var currentPo = getEarRotation(start, end, xTarget);
+  console.log("👩", currentPo);
+
+  this.ear1.rotation.set(start.x, currentPo.y, start.z);
+  // this.ear1.rotation.set(-100, -200, -100);
+
+  this.ear2.rotation.set(-100, 100, 100);
+};
+
 function loop() {
   render();
+  var xTarget = mousePos.x - windowHalfX;
+  var yTarget = mousePos.y - windowHalfY;
+
+  dog.move(xTarget, yTarget);
+
   requestAnimationFrame(loop);
 }
 
@@ -396,12 +431,10 @@ function render() {
 }
 
 function component() {
-  const el = document.createElement('div');
-  el.setAttribute('id', 'world');
+  const el = document.createElement("div");
+  el.setAttribute("id", "world");
   return el;
 }
-
-function moveEars() {}
 
 document.body.appendChild(component());
 
@@ -409,5 +442,6 @@ init();
 createLights();
 // addGrid();
 createFloor();
-createLion();
+createDog();
 loop();
+moveEars();
