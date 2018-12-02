@@ -137,6 +137,7 @@ function Dog() {
   this.bodyInitPositions = [];
   this.maneParts = [];
   this.threegroup = new Group();
+  this.headgroup = new Group();
   this.yellowMat = new MeshLambertMaterial({
     color: 0xffd177
     // shading: FlatShading,
@@ -192,8 +193,8 @@ function Dog() {
   this.head1 = new Mesh(head1, this.yellowMat);
   this.head2 = new Mesh(head2, this.yellowMat);
   this.head2.position.set(0, 90, -75);
-  this.threegroup.add(this.head1);
-  this.threegroup.add(this.head2);
+  // this.threegroup.add(this.head1);
+  // this.threegroup.add(this.head2);
 
   // ears & nose
   var ear1 = new BoxGeometry(15, 160, 100);
@@ -221,8 +222,8 @@ function Dog() {
   this.eye1.position.set(50, 90, 0);
   this.eye2.position.set(-50, 90, 0);
 
-  this.threegroup.add(this.eye1);
-  this.threegroup.add(this.eye2);
+  // this.threegroup.add(this.eye1);
+  // this.threegroup.add(this.eye2);
 
   // eyeballs
   var eyeBall1 = new BoxGeometry(15, 15, 5);
@@ -234,26 +235,40 @@ function Dog() {
   this.eyeBall1.position.set(50, 90, 11);
   this.eyeBall2.position.set(-50, 90, 11);
 
-  this.threegroup.add(this.eyeBall1);
-  this.threegroup.add(this.eyeBall2);
+  // this.threegroup.add(this.eyeBall1);
+  // this.threegroup.add(this.eyeBall2);
 
   // nose
   var nose = new BoxGeometry(35, 35, 30);
   this.nose = new Mesh(nose, this.orangeMat);
   this.nose.position.set(0, 45, 145);
-  this.threegroup.add(this.nose);
+  // this.threegroup.add(this.nose);
 
   // tongue
   var tongue = new BoxGeometry(80, 20, 80);
   this.tongue = new Mesh(tongue, this.pinkMat);
   this.tongue.position.set(0, -20, 160);
-  this.threegroup.add(this.tongue);
+  // this.threegroup.add(this.tongue);
 
   // freckles
   // var freckle1 = new BoxGeometry(2, 7, 7);
   // this.freckle1 = new Mesh(freckle1, this.pawMat);
   // this.freckle1.position.set(40, 25, 120);
   // this.threegroup.add(this.freckle1);
+
+  this.headgroup.add(this.tongue);
+  this.headgroup.add(this.nose);
+  this.headgroup.add(this.eyeBall1);
+  this.headgroup.add(this.eyeBall2);
+  this.headgroup.add(this.tongue);
+  this.headgroup.add(this.eye1);
+  this.headgroup.add(this.eye2);
+  this.headgroup.add(this.head1);
+  this.headgroup.add(this.head2);
+  this.headgroup.add(this.ear1);
+  this.headgroup.add(this.ear2);
+
+  this.threegroup.add(this.headgroup);
 
   // body
   var upperBody = new BoxGeometry(160, 300, 100);
@@ -392,6 +407,17 @@ function getEarRotation(start, end, xTarget) {
   return currentPo;
 }
 
+function clamp(number, lower, upper) {
+  if (number < lower) {
+    return lower;
+  }
+
+  if (number > upper) {
+    return upper;
+  }
+  return number;
+}
+
 // animation
 Dog.prototype.move = function(xTarget, yTarget) {
   var start = {
@@ -406,14 +432,28 @@ Dog.prototype.move = function(xTarget, yTarget) {
     z: -200
   };
 
-  var currentPo = getEarRotation(start, end, xTarget);
-  console.log("👩", currentPo);
+  // var currentPo = getEarRotation(start, end, xTarget);
 
-  this.ear1.rotation.set(start.x, currentPo.y, start.z);
-  // this.ear1.rotation.set(-100, -200, -100);
+  var tHeadRotY = rule3(xTarget, -200, 200, -Math.PI / 4, Math.PI / 4);
+  var tHeadRotX = rule3(yTarget, -200, 200, -Math.PI / 4, Math.PI / 4);
+  var tHeadPosX = rule3(xTarget, -200, 200, 70, -70);
+  var tHeadPosY = rule3(yTarget, -140, 260, 20, 100);
+  this.headgroup.rotation.x = tHeadRotX;
+  this.headgroup.rotation.y = tHeadRotY;
+  this.headgroup.position.x = tHeadPosX;
+  this.headgroup.position.y = tHeadPosY;
 
-  this.ear2.rotation.set(-100, 100, 100);
+  console.log("hh");
 };
+
+function rule3(v, vmin, vmax, tmin, tmax) {
+  var nv = Math.max(Math.min(v, vmax), vmin);
+  var dv = vmax - vmin;
+  var pc = (nv - vmin) / dv;
+  var dt = tmax - tmin;
+  var tv = tmin + pc * dt;
+  return tv;
+}
 
 function loop() {
   render();
