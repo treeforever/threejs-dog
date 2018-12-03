@@ -188,8 +188,8 @@ function Dog() {
   });
 
   // head
-  var head1 = new BoxGeometry(160, 100, 300);
-  var head2 = new BoxGeometry(160, 80, 150);
+  var head1 = new BoxGeometry(200, 100, 300);
+  var head2 = new BoxGeometry(200, 80, 150);
   this.head1 = new Mesh(head1, this.yellowMat);
   this.head2 = new Mesh(head2, this.yellowMat);
   this.head2.position.set(0, 90, -75);
@@ -271,7 +271,7 @@ function Dog() {
   this.threegroup.add(this.headgroup);
 
   // body
-  var upperBody = new BoxGeometry(160, 300, 100);
+  var upperBody = new BoxGeometry(120, 400, 100);
   this.upperBody = new Mesh(upperBody, this.yellowMat);
   this.upperBody.position.set(0, -200, -100);
   this.threegroup.add(this.upperBody);
@@ -434,16 +434,11 @@ Dog.prototype.move = function(xTarget, yTarget) {
 
   // var currentPo = getEarRotation(start, end, xTarget);
 
-  var tHeadRotY = rule3(xTarget, -200, 200, -Math.PI / 4, Math.PI / 4);
-  var tHeadRotX = rule3(yTarget, -200, 200, -Math.PI / 4, Math.PI / 4);
-  var tHeadPosX = rule3(xTarget, -200, 200, 70, -70);
-  var tHeadPosY = rule3(yTarget, -140, 260, 20, 100);
+  var tHeadRotY = rule3(xTarget, -200, 200, -Math.PI / 8, Math.PI / 8); // rotation Y calcution involves X
+  var tHeadRotX = rule3(yTarget, -200, 200, -Math.PI / 8, Math.PI / 8); // rotation X calcution involves Y
+
   this.headgroup.rotation.x = tHeadRotX;
   this.headgroup.rotation.y = tHeadRotY;
-  this.headgroup.position.x = tHeadPosX;
-  this.headgroup.position.y = tHeadPosY;
-
-  console.log("hh");
 };
 
 function rule3(v, vmin, vmax, tmin, tmax) {
