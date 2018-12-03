@@ -419,29 +419,29 @@ function clamp(number, lower, upper) {
 }
 
 // animation
-Dog.prototype.move = function(xTarget, yTarget) {
-  var start = {
-    x: -100,
-    y: -100,
-    z: -100
-  };
-
-  var end = {
-    x: 50,
-    y: -200,
-    z: -200
-  };
-
-  // var currentPo = getEarRotation(start, end, xTarget);
-
+Dog.prototype.moveHead = function(xTarget, yTarget) {
+  // move head
   var tHeadRotY = rule3(xTarget, -200, 200, -Math.PI / 8, Math.PI / 8); // rotation Y calcution involves X
   var tHeadRotX = rule3(yTarget, -200, 200, -Math.PI / 8, Math.PI / 8); // rotation X calcution involves Y
 
   this.headgroup.rotation.x = tHeadRotX;
   this.headgroup.rotation.y = tHeadRotY;
+
+  // move eyes
+
+  // right limit
+  this.eyeBall1.position.x = 62.5;
+  this.eyeBall1.position.x = 37.5;
+
+  var tEyeBall1PoX = rule3(xTarget, 37.5, 62.5, 0, windowHalfX / 2);
+  var tEyeBall1PoY = rule3(yTarget, -200, 200, -Math.PI / 8, Math.PI / 8);
+
+  console.log("hei", xTarget);
+  this.eyeBall1.position.x = tEyeBall1PoX;
+  // this.headgroup.rotation.y = tHeadRotY;
 };
 
-function rule3(v, vmin, vmax, tmin, tmax) {
+export default function rule3(v, vmin, vmax, tmin, tmax) {
   var nv = Math.max(Math.min(v, vmax), vmin);
   var dv = vmax - vmin;
   var pc = (nv - vmin) / dv;
@@ -455,7 +455,7 @@ function loop() {
   var xTarget = mousePos.x - windowHalfX;
   var yTarget = mousePos.y - windowHalfY;
 
-  dog.move(xTarget, yTarget);
+  dog.moveHead(xTarget, yTarget);
 
   requestAnimationFrame(loop);
 }
@@ -478,5 +478,4 @@ createLights();
 // addGrid();
 createFloor();
 createDog();
-loop();
-moveEars();
+// loop();
