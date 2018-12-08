@@ -478,4 +478,4 @@ createLights();
 // addGrid();
 createFloor();
 createDog();
-// loop();
+loop();
