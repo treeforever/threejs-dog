@@ -418,27 +418,35 @@ function clamp(number, lower, upper) {
   return number;
 }
 
-// animation
-Dog.prototype.moveHead = function(xTarget, yTarget) {
-  // move head
+function moveEyes(xTarget, yTarget) {
+  var tEyeBall1PoX = rule3(xTarget, 37.5, 62.5, 37.5, 62.5);
+  var tEyeBall1PoY = rule3(-yTarget, 77.5, 102.5, 77.5, 102.5);
+
+  var tEyeBall2PoX = rule3(xTarget, -62.5, -37.5, -62.5, -37.5);
+  var tEyeBall2PoY = rule3(-yTarget, 77.5, 102.5, 77.5, 102.5);
+  return { tEyeBall1PoX, tEyeBall1PoY, tEyeBall2PoX, tEyeBall2PoY };
+}
+
+function moveHead(xTarget, yTarget) {
   var tHeadRotY = rule3(xTarget, -200, 200, -Math.PI / 8, Math.PI / 8); // rotation Y calcution involves X
   var tHeadRotX = rule3(yTarget, -200, 200, -Math.PI / 8, Math.PI / 8); // rotation X calcution involves Y
+  return { tHeadRotY, tHeadRotX };
+}
 
+// animation
+Dog.prototype.move = function(xTarget, yTarget) {
+  const { tHeadRotY, tHeadRotX } = moveHead(xTarget, yTarget);
   this.headgroup.rotation.x = tHeadRotX;
   this.headgroup.rotation.y = tHeadRotY;
 
-  // move eyes
-
-  // right limit
-  this.eyeBall1.position.x = 62.5;
-  this.eyeBall1.position.x = 37.5;
-
-  var tEyeBall1PoX = rule3(xTarget, 37.5, 62.5, 0, windowHalfX / 2);
-  var tEyeBall1PoY = rule3(yTarget, -200, 200, -Math.PI / 8, Math.PI / 8);
-
-  console.log("hei", xTarget);
+  const { tEyeBall1PoX, tEyeBall1PoY, tEyeBall2PoX, tEyeBall2PoY } = moveEyes(
+    xTarget,
+    yTarget
+  );
   this.eyeBall1.position.x = tEyeBall1PoX;
-  // this.headgroup.rotation.y = tHeadRotY;
+  this.eyeBall1.position.y = tEyeBall1PoY;
+  this.eyeBall2.position.x = tEyeBall2PoX;
+  this.eyeBall2.position.y = tEyeBall2PoY;
 };
 
 export default function rule3(v, vmin, vmax, tmin, tmax) {
@@ -455,7 +463,7 @@ function loop() {
   var xTarget = mousePos.x - windowHalfX;
   var yTarget = mousePos.y - windowHalfY;
 
-  dog.moveHead(xTarget, yTarget);
+  dog.move(xTarget, yTarget);
 
   requestAnimationFrame(loop);
 }
