@@ -34,5 +34,12 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "three": "^0.97.0"
+  },
+  "ava": {
+    "babel": {
+      "extensions": [
+        "js"
+      ]
+    }
   }
 }
