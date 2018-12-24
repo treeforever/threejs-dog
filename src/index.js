@@ -446,24 +446,25 @@ var tongueZMin = 160;
 var tongueZMax = 200;
 
 Dog.prototype.moveTongue = function(speed) {
-  var distance = 1 / speed;
+  var distancePerSecond = 1 / speed;
 
-  function check(z) {
+  function updateTonguePosition(z) {
     if (moveBackward) {
-      z += distance;
+      z = z + distancePerSecond;
       if (z >= tongueZMax) {
         moveBackward = false;
       }
     } else if (!moveBackward) {
-      z -= distance;
+      z = z - distancePerSecond;
       if (z <= tongueZMin) {
         moveBackward = true;
       }
     }
+
     dog.tongue.position.z = z;
   }
 
-  check(dog.tongue.position.z);
+  updateTonguePosition(dog.tongue.position.z);
 };
 
 function loop(timestamp) {
@@ -472,7 +473,7 @@ function loop(timestamp) {
   var yTarget = mousePos.y - windowHalfY;
 
   dog.moveWithCursor(xTarget, yTarget);
-  dog.moveTongue(300);
+  dog.moveTongue(0.8);
 
   requestAnimationFrame(loop);
 }
@@ -496,4 +497,3 @@ createLights();
 createFloor();
 createDog();
 loop();
-setInterval(dog.moveTongue, 3000);
