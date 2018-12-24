@@ -444,6 +444,7 @@ function rule3(v, vmin, vmax, tmin, tmax) {
 var moveBackward = true;
 var tongueZMin = 160;
 var tongueZMax = 200;
+var count = 0;
 
 Dog.prototype.moveTongue = function(speed) {
   var distancePerSecond = 1 / speed;
@@ -458,13 +459,23 @@ Dog.prototype.moveTongue = function(speed) {
       z = z - distancePerSecond;
       if (z <= tongueZMin) {
         moveBackward = true;
+        count++;
       }
     }
 
     dog.tongue.position.z = z;
   }
 
-  updateTonguePosition(dog.tongue.position.z);
+  if (count !== 0 && count % 5 === 0) {
+    setTimeout(function() {
+      count++;
+      console.log("freeze");
+    }, 3000);
+  } else {
+    console.log("stick");
+
+    updateTonguePosition(dog.tongue.position.z);
+  }
 };
 
 function loop(timestamp) {
@@ -473,7 +484,8 @@ function loop(timestamp) {
   var yTarget = mousePos.y - windowHalfY;
 
   dog.moveWithCursor(xTarget, yTarget);
-  dog.moveTongue(0.8);
+
+  dog.moveTongue(0.5);
 
   requestAnimationFrame(loop);
 }
