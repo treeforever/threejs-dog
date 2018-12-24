@@ -187,16 +187,12 @@ function Dog() {
     // shading: FlatShading,
   });
 
-  // head
   var head1 = new BoxGeometry(200, 100, 300);
   var head2 = new BoxGeometry(200, 80, 150);
   this.head1 = new Mesh(head1, this.yellowMat);
   this.head2 = new Mesh(head2, this.yellowMat);
   this.head2.position.set(0, 90, -75);
-  // this.threegroup.add(this.head1);
-  // this.threegroup.add(this.head2);
 
-  // ears & nose
   var ear1 = new BoxGeometry(15, 160, 100);
   var ear2 = new BoxGeometry(15, 160, 100);
 
@@ -212,7 +208,6 @@ function Dog() {
   this.threegroup.add(this.ear1);
   this.threegroup.add(this.ear2);
 
-  // eyes
   var eye1 = new BoxGeometry(40, 40, 10);
   var eye2 = new BoxGeometry(40, 40, 10);
 
@@ -222,10 +217,6 @@ function Dog() {
   this.eye1.position.set(50, 90, 0);
   this.eye2.position.set(-50, 90, 0);
 
-  // this.threegroup.add(this.eye1);
-  // this.threegroup.add(this.eye2);
-
-  // eyeballs
   var eyeBall1 = new BoxGeometry(15, 15, 5);
   var eyeBall2 = new BoxGeometry(15, 15, 5);
 
@@ -235,20 +226,13 @@ function Dog() {
   this.eyeBall1.position.set(50, 90, 11);
   this.eyeBall2.position.set(-50, 90, 11);
 
-  // this.threegroup.add(this.eyeBall1);
-  // this.threegroup.add(this.eyeBall2);
-
-  // nose
   var nose = new BoxGeometry(35, 35, 30);
   this.nose = new Mesh(nose, this.orangeMat);
   this.nose.position.set(0, 45, 145);
-  // this.threegroup.add(this.nose);
 
-  // tongue
   var tongue = new BoxGeometry(80, 20, 80);
   this.tongue = new Mesh(tongue, this.pinkMat);
   this.tongue.position.set(0, -20, 160);
-  // this.threegroup.add(this.tongue);
 
   // freckles
   // var freckle1 = new BoxGeometry(2, 7, 7);
@@ -433,8 +417,7 @@ function moveHead(xTarget, yTarget) {
   return { tHeadRotY, tHeadRotX };
 }
 
-// animation
-Dog.prototype.move = function(xTarget, yTarget) {
+Dog.prototype.moveWithCursor = function(xTarget, yTarget) {
   const { tHeadRotY, tHeadRotX } = moveHead(xTarget, yTarget);
   this.headgroup.rotation.x = tHeadRotX;
   this.headgroup.rotation.y = tHeadRotY;
@@ -449,7 +432,7 @@ Dog.prototype.move = function(xTarget, yTarget) {
   this.eyeBall2.position.y = tEyeBall2PoY;
 };
 
-export default function rule3(v, vmin, vmax, tmin, tmax) {
+function rule3(v, vmin, vmax, tmin, tmax) {
   var nv = Math.max(Math.min(v, vmax), vmin);
   var dv = vmax - vmin;
   var pc = (nv - vmin) / dv;
@@ -458,12 +441,38 @@ export default function rule3(v, vmin, vmax, tmin, tmax) {
   return tv;
 }
 
-function loop() {
+var moveBackward = true;
+var tongueZMin = 160;
+var tongueZMax = 200;
+
+Dog.prototype.moveTongue = function(speed) {
+  var distance = 1 / speed;
+
+  function check(z) {
+    if (moveBackward) {
+      z += distance;
+      if (z >= tongueZMax) {
+        moveBackward = false;
+      }
+    } else if (!moveBackward) {
+      z -= distance;
+      if (z <= tongueZMin) {
+        moveBackward = true;
+      }
+    }
+    dog.tongue.position.z = z;
+  }
+
+  check(dog.tongue.position.z);
+};
+
+function loop(timestamp) {
   render();
   var xTarget = mousePos.x - windowHalfX;
   var yTarget = mousePos.y - windowHalfY;
 
-  dog.move(xTarget, yTarget);
+  dog.moveWithCursor(xTarget, yTarget);
+  dog.moveTongue(300);
 
   requestAnimationFrame(loop);
 }
@@ -487,3 +496,4 @@ createLights();
 createFloor();
 createDog();
 loop();
+setInterval(dog.moveTongue, 3000);
