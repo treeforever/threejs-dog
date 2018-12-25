@@ -264,6 +264,9 @@ export function Dog() {
       object.receiveShadow = true;
     }
   });
+
+  this.tongueMoving = true;
+  this.moveBackward = true;
 }
 
 function rule3(v, vmin, vmax, tmin, tmax) {
@@ -305,26 +308,26 @@ Dog.prototype.moveWithCursor = function(xTarget, yTarget) {
   this.eyeBall2.position.y = tEyeBall2PoY;
 };
 
-let moveBackward = true;
 const TONGUE_Z_MIN = 160;
 const TONGUE_Z_MAX = 200;
 
-Dog.prototype.moveTongue = function(speed) {
+Dog.prototype.maybeMoveTongue = function(speed) {
   const updateTonguePosition = (z, distancePerSecond) => {
-    if (moveBackward) {
+    if (this.moveBackward) {
       z = z + distancePerSecond;
       if (z >= TONGUE_Z_MAX) {
-        moveBackward = false;
+        this.moveBackward = false;
       }
-    } else if (!moveBackward) {
+    } else if (!this.moveBackward) {
       z = z - distancePerSecond;
       if (z <= TONGUE_Z_MIN) {
-        moveBackward = true;
+        this.moveBackward = true;
       }
     }
 
     this.tongue.position.z = z;
   };
-
-  updateTonguePosition(this.tongue.position.z, 1 / speed);
+  if (this.tongueMoving) {
+    updateTonguePosition(this.tongue.position.z, 1 / speed);
+  }
 };

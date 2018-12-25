@@ -144,15 +144,13 @@ function clamp(number, lower, upper) {
   return number;
 }
 
-let tongueMoving = true;
-
 function sleep(millsecs) {
   return new Promise(resolve => setTimeout(resolve, millsecs));
 }
 
 async function tongeToggleLoop() {
   while (true) {
-    tongueMoving = !tongueMoving;
+    dog.tongueMoving = !dog.tongueMoving;
     const randomInterval = Math.ceil(Math.random() * 4) * 1000;
     await sleep(randomInterval);
   }
@@ -164,9 +162,7 @@ function loop(timestamp) {
   var yTarget = mousePos.y - windowHalfY;
 
   dog.moveWithCursor(xTarget, yTarget);
-  if (tongueMoving) {
-    dog.moveTongue(0.5);
-  }
+  dog.maybeMoveTongue(0.5);
 
   requestAnimationFrame(loop);
 }
