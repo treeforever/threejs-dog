@@ -36,7 +36,6 @@ var scene,
 
 //SCENE
 var floor,
-  dog,
   fan,
   isBlowing = false;
 
@@ -128,8 +127,7 @@ function createFloor() {
   scene.add(floor);
 }
 
-function createDog() {
-  dog = new Dog();
+function addDogToScene(dog) {
   scene.add(dog.threegroup);
 }
 
@@ -148,7 +146,7 @@ function sleep(millsecs) {
   return new Promise(resolve => setTimeout(resolve, millsecs));
 }
 
-async function tongeToggleLoop() {
+async function tongueToggleController(dog) {
   while (true) {
     dog.tongueMoving = !dog.tongueMoving;
     const randomInterval = Math.ceil(Math.random() * 4) * 1000;
@@ -156,15 +154,24 @@ async function tongeToggleLoop() {
   }
 }
 
-function loop(timestamp) {
-  render();
-  var xTarget = mousePos.x - windowHalfX;
-  var yTarget = mousePos.y - windowHalfY;
+async function tongueController(dog) {
+  while (true) {
+    dog.maybeMoveTongue(0.5);
+    await sleep(10);
+  }
+}
 
-  dog.moveWithCursor(xTarget, yTarget);
-  dog.maybeMoveTongue(0.5);
+function loop(dog) {
+  function renderLoop(timestamp) {
+    render();
+    var xTarget = mousePos.x - windowHalfX;
+    var yTarget = mousePos.y - windowHalfY;
 
-  requestAnimationFrame(loop);
+    dog.moveWithCursor(xTarget, yTarget);
+
+    requestAnimationFrame(renderLoop);
+  }
+  renderLoop();
 }
 
 function render() {
@@ -184,6 +191,9 @@ init();
 createLights();
 // addGrid();
 createFloor();
-createDog();
-loop();
-tongeToggleLoop();
+
+const dog = new Dog();
+addDogToScene(dog);
+loop(dog);
+tongueToggleController(dog);
+tongueController(dog);
