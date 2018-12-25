@@ -447,9 +447,7 @@ var tongueZMax = 200;
 var count = 0;
 
 Dog.prototype.moveTongue = function(speed) {
-  var distancePerSecond = 1 / speed;
-
-  function updateTonguePosition(z) {
+  function updateTonguePosition(z, distancePerSecond) {
     if (moveBackward) {
       z = z + distancePerSecond;
       if (z >= tongueZMax) {
@@ -466,17 +464,21 @@ Dog.prototype.moveTongue = function(speed) {
     dog.tongue.position.z = z;
   }
 
-  if (count !== 0 && count % 5 === 0) {
-    setTimeout(function() {
-      count++;
-      console.log("freeze");
-    }, 3000);
-  } else {
-    console.log("stick");
-
-    updateTonguePosition(dog.tongue.position.z);
+  if (tongueShouldMove) {
+    updateTonguePosition(dog.tongue.position.z, 1 / speed);
   }
 };
+
+let tongueShouldMove = true;
+function scheduleTongueMove() {
+  const randomInterval = Math.ceil(Math.random() * 4) * 1000;
+
+  const timerId = setTimeout(function() {
+    tongueShouldMove = !tongueShouldMove;
+    clearTimeout(timerId);
+    scheduleTongueMove();
+  }, randomInterval);
+}
 
 function loop(timestamp) {
   render();
@@ -509,3 +511,4 @@ createLights();
 createFloor();
 createDog();
 loop();
+scheduleTongueMove();
