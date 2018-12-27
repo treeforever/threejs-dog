@@ -1,4 +1,5 @@
 import { Group, BoxGeometry, Mesh } from "three";
+import MATERIAL_MAP from "./material";
 
 const prototype = {
   headGroup: [
@@ -41,7 +42,7 @@ const partCreator = element => {
     rotation: { x: rX, y: rY, z: rZ }
   } = element;
   const box = new BoxGeometry(length, width, height);
-  const part = new Mesh(box, material);
+  const part = new Mesh(box, MATERIAL_MAP[material]);
   part.position.set(x, y, z);
   rotation && part.rotation.set(rX, rY, rZ);
   return part;
