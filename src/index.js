@@ -18,7 +18,6 @@ import {
 import "@babel/polyfill";
 import OrbitControls from "./OrbitControls";
 import { Dog } from "./dog";
-import { dogGenerator, prototype } from "./dog-datatype";
 
 //THREEJS RELATED VARIABLES
 
@@ -183,7 +182,7 @@ createLights();
 createFloor();
 
 const dog = new Dog();
-// const dog = dogGenerator(prototype);
+console.log("dog", dog);
 
 addDogToScene(dog.group);
 render();

@@ -6,10 +6,36 @@ import {
   BoxGeometry
 } from "three";
 import MATERIAL_MAP from "./material";
-import { dogGenerator, prototype } from "./dog-datatype";
+import { prototype } from "./dog-datatype";
+
+const partCreator = element => {
+  const { width, height, depth, material, position, rotation } = element;
+
+  const box = new BoxGeometry(width, height, depth);
+  const part = new Mesh(box, MATERIAL_MAP[material]);
+  part.position.set(position.x, position.y, position.z);
+  rotation && part.rotation.set(rotation.x, rotation.y, rotation.z);
+  return part;
+};
+
+export const dogGenerator = dogData => {
+  const keys = Object.keys(dogData);
+  const dogGroup = new Group();
+  keys.forEach(key => {
+    const part = partCreator(dogData[key]);
+    dogGroup.add(part);
+  });
+
+  return dogGroup;
+};
 
 export function Dog() {
   this.group = dogGenerator(prototype);
+
+  const keys = Object.keys(prototype);
+  keys.forEach(key => {
+    this[key] = partCreator(prototype[key]);
+  });
 
   // don't care now
   // this.threegroup.traverse(function(object) {
@@ -49,17 +75,17 @@ function moveHead(xTarget, yTarget) {
 
 Dog.prototype.moveWithCursor = function(xTarget, yTarget) {
   const { tHeadRotY, tHeadRotX } = moveHead(xTarget, yTarget);
-  this.group.headgroup.rotation.x = tHeadRotX;
-  this.group.headgroup.rotation.y = tHeadRotY;
+  // this.group.headgroup.rotation.x = tHeadRotX;
+  // this.group.headgroup.rotation.y = tHeadRotY;
 
   const { tEyeBall1PoX, tEyeBall1PoY, tEyeBall2PoX, tEyeBall2PoY } = moveEyes(
     xTarget,
     yTarget
   );
-  this.group.headgroup.eyeBall1.position.x = tEyeBall1PoX;
-  this.group.headgroup.eyeBall1.position.y = tEyeBall1PoY;
-  this.group.headgroup.eyeBall2.position.x = tEyeBall2PoX;
-  this.group.headgroup.eyeBall2.position.y = tEyeBall2PoY;
+  this.eyeBall1.position.x = tEyeBall1PoX;
+  this.eyeBall1.position.y = tEyeBall1PoY;
+  this.eyeBall2.position.x = tEyeBall2PoX;
+  this.eyeBall2.position.y = tEyeBall2PoY;
 };
 
 const TONGUE_Z_MIN = 160;

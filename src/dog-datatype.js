@@ -185,46 +185,6 @@ export const prototype = {
   }
 };
 
-const getObjectValue = object => {
-  const key = Object.keys(object)[0];
-  return object[key];
-};
-
-const partCreator = element => {
-  const { width, height, depth, material, position, rotation } = getObjectValue(
-    element
-  );
-
-  const box = new BoxGeometry(width, height, depth);
-  const part = new Mesh(box, MATERIAL_MAP[material]);
-  part.position.set(position.x, position.y, position.z);
-  rotation && part.rotation.set(rotation.x, rotation.y, rotation.z);
-  return part;
-};
-
-const composeParts = element => {
-  const group = new Group();
-  if (element.length) {
-    element.forEach(item => {
-      const childGroup = composeParts(item);
-      group.add(childGroup);
-    });
-  } else {
-    const part = partCreator(element);
-    group.add(part);
-  }
-  return group;
-};
-
-export const dogGenerator = dogData => {
-  const keys = Object.keys(dogData);
-  const dogGroup = new Group();
-  keys
-    .map(key => composeParts(dogData[key]))
-    .forEach(group => dogGroup.add(group));
-  return dogGroup;
-};
-
 // Original Code:
 
 // var head1 = new BoxGeometry(200, 100, 300);
