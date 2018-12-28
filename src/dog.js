@@ -6,7 +6,7 @@ import {
   BoxGeometry
 } from "three";
 import MATERIAL_MAP from "./material";
-import { prototype } from "./dog-datatype";
+import { initialState } from "./initialState";
 
 const partCreator = element => {
   const { width, height, depth, material, position, rotation } = element;
@@ -30,11 +30,11 @@ export const dogGenerator = dogData => {
 };
 
 export function Dog() {
-  this.group = dogGenerator(prototype);
+  this.group = dogGenerator(initialState);
 
-  const keys = Object.keys(prototype);
+  const keys = Object.keys(initialState);
   keys.forEach(key => {
-    this[key] = partCreator(prototype[key]);
+    this[key] = partCreator(initialState[key]);
   });
 
   // don't care now

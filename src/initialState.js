@@ -1,7 +1,7 @@
 import { Group, BoxGeometry, Mesh } from "three";
 import MATERIAL_MAP from "./material";
 
-export const prototype = {
+export const initialState = {
   head1: {
     width: 200,
     height: 100,
