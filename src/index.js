@@ -182,11 +182,11 @@ createLights();
 // addGrid();
 createFloor();
 
-// const dog = new Dog();
-const dog = dogGenerator(prototype);
+const dog = new Dog();
+// const dog = dogGenerator(prototype);
 
-addDogToScene(dog); // dog.threegroup
+addDogToScene(dog.group);
 render();
-// loop(dog);
-// tongueToggleController(dog);
-// tongueController(dog);
+loop(dog);
+tongueToggleController(dog);
+tongueController(dog);
