@@ -1,19 +1,9 @@
 import {
-  Scene,
-  PerspectiveCamera,
-  Vector3,
-  WebGLRenderer,
-  GridHelper,
-  HemisphereLight,
-  DirectionalLight,
   Mesh,
-  PlaneBufferGeometry,
   MeshBasicMateria,
   Group,
   MeshLambertMaterial,
-  BoxGeometry,
-  FlatShading,
-  MeshBasicMaterial
+  BoxGeometry
 } from "three";
 
 export function Dog() {

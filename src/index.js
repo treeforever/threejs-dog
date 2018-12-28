@@ -18,6 +18,7 @@ import {
 import "@babel/polyfill";
 import OrbitControls from "./OrbitControls";
 import { Dog } from "./dog";
+import { dogGenerator, prototype } from "./dog-datatype";
 
 //THREEJS RELATED VARIABLES
 
@@ -128,18 +129,7 @@ function createFloor() {
 }
 
 function addDogToScene(dog) {
-  scene.add(dog.threegroup);
-}
-
-function clamp(number, lower, upper) {
-  if (number < lower) {
-    return lower;
-  }
-
-  if (number > upper) {
-    return upper;
-  }
-  return number;
+  scene.add(dog);
 }
 
 function sleep(millsecs) {
@@ -192,8 +182,11 @@ createLights();
 // addGrid();
 createFloor();
 
-const dog = new Dog();
-addDogToScene(dog);
-loop(dog);
-tongueToggleController(dog);
-tongueController(dog);
+// const dog = new Dog();
+const dog = dogGenerator(prototype);
+
+addDogToScene(dog); // dog.threegroup
+render();
+// loop(dog);
+// tongueToggleController(dog);
+// tongueController(dog);
