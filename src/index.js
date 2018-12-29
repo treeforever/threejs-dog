@@ -152,9 +152,9 @@ async function tongueController(dog) {
 
 function loop(dog) {
   function renderLoop(timestamp) {
-    render();
     var xTarget = mousePos.x - windowHalfX;
     var yTarget = mousePos.y - windowHalfY;
+    render();
 
     dog.moveWithCursor(xTarget, yTarget);
 
@@ -182,7 +182,6 @@ createLights();
 createFloor();
 
 const dog = new Dog();
-console.log("dog", dog);
 
 addDogToScene(dog.group);
 render();

@@ -9,7 +9,6 @@ export const initialState = {
     material: "yellowMat",
     position: { x: 0, y: 0, z: 0 }
   },
-
   head2: {
     width: 200,
     height: 80,
@@ -17,7 +16,6 @@ export const initialState = {
     material: "yellowMat",
     position: { x: 0, y: 90, z: -75 }
   },
-
   eye1: {
     width: 40,
     height: 40,
@@ -25,7 +23,6 @@ export const initialState = {
     material: "whiteMat",
     position: { x: 50, y: 90, z: 0 }
   },
-
   eye2: {
     width: 40,
     height: 40,
@@ -77,7 +74,6 @@ export const initialState = {
     material: "pinkMat",
     position: { x: 0, y: -20, z: 160 }
   },
-
   upperBody: {
     width: 120,
     height: 400,

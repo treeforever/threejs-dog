@@ -18,24 +18,28 @@ const partCreator = element => {
   return part;
 };
 
-export const dogGenerator = dogData => {
-  const keys = Object.keys(dogData);
-  const dogGroup = new Group();
-  keys.forEach(key => {
-    const part = partCreator(dogData[key]);
-    dogGroup.add(part);
-  });
+const genAllParts = dogData => {
+  const parts = {};
+  for (let k in dogData) {
+    parts[k] = partCreator(dogData[k]);
+  }
 
-  return dogGroup;
+  return parts;
 };
 
-export function Dog() {
-  this.group = dogGenerator(initialState);
+function groupParts(parts) {
+  const g = new Group();
+  for (let k in parts) {
+    g.add(parts[k]);
+  }
+  return g;
+}
 
-  const keys = Object.keys(initialState);
-  keys.forEach(key => {
-    this[key] = partCreator(initialState[key]);
-  });
+export function Dog() {
+  const parts = genAllParts(initialState);
+  Object.assign(this, parts);
+
+  this.group = groupParts(parts);
 
   // don't care now
   // this.threegroup.traverse(function(object) {
@@ -86,6 +90,8 @@ Dog.prototype.moveWithCursor = function(xTarget, yTarget) {
   this.eyeBall1.position.y = tEyeBall1PoY;
   this.eyeBall2.position.x = tEyeBall2PoX;
   this.eyeBall2.position.y = tEyeBall2PoY;
+
+  // console.log("☄️️️️", this.eyeBall1.position.x);
 };
 
 const TONGUE_Z_MIN = 160;
@@ -107,7 +113,9 @@ Dog.prototype.maybeMoveTongue = function(speed) {
 
     this.tongue.position.z = z;
   };
+
   if (this.tongueMoving) {
+    // console.log("☄️️️️", this.tongueMoving, this.tongue.position.z, 1 / speed);
     updateTonguePosition(this.tongue.position.z, 1 / speed);
   }
 };
