@@ -151,19 +151,61 @@ export const initialState = {
     material: "orangeMat",
     position: { x: -105, y: -325, z: 0 }
   },
-  leftFrontPaw: {
+  leftFrontToe1: {
+    width: 7,
+    height: 51,
+    depth: 30,
+    material: "pawMat",
+    position: { x: -115, y: -324, z: 87 }
+  },
+  leftFrontToe2: {
+    width: 7,
+    height: 51,
+    depth: 30,
+    material: "pawMat",
+    position: { x: -95, y: -324, z: 87 }
+  },
+  leftBackToe1: {
     width: 7,
     height: 51,
     depth: 30,
     material: "pawMat",
     position: { x: -175, y: -324, z: -314 }
   },
-  rightFrontPaw: {
+  leftBackToe2: {
+    width: 7,
+    height: 51,
+    depth: 30,
+    material: "pawMat",
+    position: { x: -155, y: -324, z: -314 }
+  },
+  rightFrontToe1: {
+    width: 7,
+    height: 51,
+    depth: 30,
+    material: "pawMat",
+    position: { x: 115, y: -324, z: 87 }
+  },
+  rightFrontToe2: {
+    width: 7,
+    height: 51,
+    depth: 30,
+    material: "pawMat",
+    position: { x: 95, y: -324, z: 87 }
+  },
+  rightBackToe1: {
     width: 7,
     height: 51,
     depth: 30,
     material: "pawMat",
     position: { x: 175, y: -324, z: -314 }
+  },
+  rightBackToe2: {
+    width: 7,
+    height: 51,
+    depth: 30,
+    material: "pawMat",
+    position: { x: 155, y: -324, z: -314 }
   },
   tail1: {
     width: 20,
